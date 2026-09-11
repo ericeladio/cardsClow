@@ -8,7 +8,6 @@ export default config({
   collections: {
     pageContentEs: collection({
       label: "Contenido Grid 1 (ES)",
-      slugField: "slug",
       path: "src/content/page-content/es/*",
       format: { contentField: "content" },
       schema: {
@@ -49,7 +48,6 @@ export default config({
     }),
     pageContentEn: collection({
       label: "Contenido Grid 1 (EN)",
-      slugField: "slug",
       path: "src/content/page-content/en/*",
       format: { contentField: "content" },
       schema: {
