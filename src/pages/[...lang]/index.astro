@@ -8,6 +8,7 @@ import DailyCardImage from '../../components/DailyCardImage.astro';
 import ModalInfo from '../../components/ModalInfo.astro';
 import { type Locale } from '../../data/clowCards';
 import { translations } from '../../i18n/translations';
+import { getCollection } from 'astro:content';
 
 export function getStaticPaths() {
   return [
@@ -19,6 +20,9 @@ export function getStaticPaths() {
 const { lang } = Astro.params;
 const locale = lang as Locale;
 const t = translations[locale];
+
+const contentCollection = locale === 'es' ? await getCollection('pageContentEs') : await getCollection('pageContentEn');
+const c = contentCollection[0]?.data;
 const site = Astro.site?.toString() ?? "https://tarotpage.vercel.app";
 const canonical = new URL(`/${locale}/`, site).toString();
 
@@ -65,17 +69,18 @@ const jsonLd = [
     <div class="bg-gradient"></div>
     <div class="golden-curve"></div>
     <section class="hero-area">
-      <HeroSection title={t.hero.title} />
+      <HeroSection title={c?.pageTitle ?? t.hero.title} />
     </section>
     <div class="main-grid">
       <div class="grid-col-1">
         <ReadingsColumns 
-          readingButtonText={t.readings.getReading}
-          crystalTitle={t.readings.crystalReadings}
-          crystalSubtitle={t.readings.crystalSubtitle}
-          crystalDesc={t.readings.crystalDesc}
-          crystalButtonText={t.readings.registerNow}
-          experience={t.readings.experience}
+          bookImage={c?.bookImage || undefined}
+          readingButtonText={c?.readingButtonText ?? t.readings.getReading}
+          crystalTitle={c?.crystalTitle ?? t.readings.crystalReadings}
+          crystalSubtitle={c?.crystalSubtitle ?? t.readings.crystalSubtitle}
+          crystalDesc={c?.crystalDesc ?? t.readings.crystalDesc}
+          crystalButtonText={c?.crystalButtonText ?? t.readings.registerNow}
+          experience={c?.experience ?? t.readings.experience}
         />
       </div>
       <div class="grid-col-2">
@@ -270,12 +275,19 @@ const jsonLd = [
       height: auto;
       min-height: 100vh;
       padding-top: 45px;
+      overflow: auto;
+    }
+
+    .bg-gradient {
+      width: 30%;
+      height: 40%;
     }
 
     .main-grid {
       grid-template-columns: 1fr;
       padding: 0 1rem;
       gap: 1rem;
+      overflow: hidden;
     }
 
     .grid-col-1 {
@@ -309,6 +321,21 @@ const jsonLd = [
 
     .golden-curve {
       display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .main-grid {
+      gap: 0.8rem;
+      padding: 0 0.8rem;
+    }
+
+    .grid-col-1 {
+      padding-bottom: 0.8rem;
+    }
+
+    .cotd-wrapper {
+      padding-bottom: 0.8rem;
     }
   }
 </style>

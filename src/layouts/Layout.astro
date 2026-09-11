@@ -122,4 +122,15 @@ const ogImageUrl = ogImage.startsWith("http") ? ogImage : new URL(ogImage, site)
 		max-width: 100%;
 		height: auto;
 	}
+
+	@media (max-width: 768px) {
+		html, body {
+			height: auto;
+			min-height: 100vh;
+			overflow: auto;
+		}
+		body {
+			overflow-x: hidden;
+		}
+	}
 </style>

@@ -5,109 +5,85 @@ export default config({
     kind: "local",
   },
   collections: {
-    hero: collection({
-      label: "Hero Section",
-      slugField: "title",
-      path: "src/content/landing/hero",
+    pageContentEs: collection({
+      label: "Contenido Grid 1 (ES)",
+      slugField: "slug",
+      path: "src/content/page-content/es/*",
       format: { contentField: "content" },
       schema: {
-        title: fields.slug({
-          name: { label: "Título ID" },
+        slug: fields.slug({
+          name: { label: "Slug" },
         }),
-        subtitle: fields.text({
-          label: "Subtítulo",
-        }),
-        content: fields.markdoc({
-          label: "Contenido",
-        }),
-      },
-    }),
-    cardOfTheDay: collection({
-      label: "Card of the Day",
-      slugField: "cardName",
-      path: "src/content/landing/card-of-the-day",
-      format: { contentField: "content" },
-      schema: {
-        cardName: fields.slug({
-          name: { label: "Nombre de la Carta" },
-        }),
-        day: fields.text({
-          label: "Día",
-        }),
-        month: fields.text({
-          label: "Mes",
-        }),
-        description: fields.text({
-          label: "Descripción",
-          multiline: true,
-        }),
-        content: fields.markdoc({
-          label: "Contenido",
-        }),
-      },
-    }),
-    readings: collection({
-      label: "Readings Columns",
-      slugField: "readingTitle",
-      path: "src/content/landing/readings",
-      format: { contentField: "content" },
-      schema: {
-        readingTitle: fields.slug({
-          name: { label: "Título Lectura" },
+        pageTitle: fields.text({
+          label: "Título de Página",
         }),
         readingButtonText: fields.text({
-          label: "Texto Botón Lectura",
-        }),
-        crystalTitle: fields.text({
-          label: "Título Crystal Readings",
-        }),
-        crystalDate: fields.text({
-          label: "Fecha Crystal",
-        }),
-        crystalCardName: fields.text({
-          label: "Nombre Carta Crystal",
+          label: "Botón Obtener Lectura",
         }),
         crystalButtonText: fields.text({
-          label: "Texto Botón Crystal",
+          label: "Botón Reserva Ahora",
         }),
-        meaningsTitle: fields.text({
-          label: "Título Card Meanings",
+        bookImage: fields.image({
+          label: "Imagen del Libro",
+          directory: "public/assets",
+          publicPath: "/assets/",
         }),
-        wheelCardName: fields.text({
-          label: "Nombre Carta Wheel",
+        crystalTitle: fields.text({
+          label: "Título Columna Cristal",
         }),
-        wheelDescription: fields.text({
-          label: "Descripción Wheel of Fortune",
+        crystalSubtitle: fields.text({
+          label: "Subtítulo Columna Cristal",
+        }),
+        crystalDesc: fields.text({
+          label: "Descripción Columna Cristal",
           multiline: true,
+        }),
+        experience: fields.text({
+          label: "Texto Experiencia",
         }),
         content: fields.markdoc({
           label: "Contenido",
         }),
       },
     }),
-    siteConfig: collection({
-      label: "Configuración del Sitio",
-      slugField: "siteTitle",
-      path: "src/content/landing/config",
+    pageContentEn: collection({
+      label: "Contenido Grid 1 (EN)",
+      slugField: "slug",
+      path: "src/content/page-content/en/*",
       format: { contentField: "content" },
       schema: {
-        siteTitle: fields.slug({
-          name: { label: "Título del Sitio" },
+        slug: fields.slug({
+          name: { label: "Slug" },
         }),
-        navInfo: fields.text({
-          label: "Texto Nav Info",
+        pageTitle: fields.text({
+          label: "Page Title",
         }),
-        navHoroscope: fields.text({
-          label: "Texto Nav Horoscope",
+        readingButtonText: fields.text({
+          label: "Get a Reading Button",
         }),
-        navContact: fields.text({
-          label: "Texto Nav Contact",
+        crystalButtonText: fields.text({
+          label: "Book Now Button",
         }),
-        footerText: fields.text({
-          label: "Texto Footer",
+        bookImage: fields.image({
+          label: "Book Image",
+          directory: "public/assets",
+          publicPath: "/assets/",
+        }),
+        crystalTitle: fields.text({
+          label: "Crystal Column Title",
+        }),
+        crystalSubtitle: fields.text({
+          label: "Crystal Column Subtitle",
+        }),
+        crystalDesc: fields.text({
+          label: "Crystal Column Description",
+          multiline: true,
+        }),
+        experience: fields.text({
+          label: "Experience Text",
         }),
         content: fields.markdoc({
-          label: "Contenido",
+          label: "Content",
         }),
       },
     }),

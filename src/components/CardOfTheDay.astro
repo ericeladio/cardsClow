@@ -302,6 +302,7 @@ const { locale = 'es' } = Astro.props;
   @media (max-width: 768px) {
     .card-of-the-day {
       padding: 0.8rem 0.6rem;
+      overflow: hidden;
     }
 
     :global(.date-display .date-day) {
@@ -327,8 +328,36 @@ const { locale = 'es' } = Astro.props;
       display: none;
     }
 
-    .particle {
-      animation-duration: 8s !important;
+    .magic-particles .particle {
+      animation-duration: 8s;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .magic-glow {
+      width: 240px;
+      height: 300px;
+    }
+
+    .magic-hand img {
+      width: 120px;
+      max-height: 120px;
+    }
+
+    :global(.cotd-title) {
+      font-size: 0.9rem;
+    }
+
+    :global(.date-display .date-day) {
+      font-size: 1.4rem;
+    }
+
+    :global(.card-name) {
+      font-size: 1.1rem;
+    }
+
+    :global(.card-meaning) {
+      font-size: 0.7rem;
     }
   }
 </style>

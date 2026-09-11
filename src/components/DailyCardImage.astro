@@ -140,10 +140,12 @@ const { locale = 'es' } = Astro.props;
   @media (max-width: 768px) {
     .card-display {
       padding: 1rem;
+      overflow: hidden;
     }
 
     .card-wrapper {
-      width: 210px;
+      width: 190px;
+      transform: none;
     }
 
     .card-image {
@@ -153,7 +155,7 @@ const { locale = 'es' } = Astro.props;
 
   @media (max-width: 480px) {
     .card-wrapper {
-      width: 170px;
+      width: 150px;
     }
   }
 </style>

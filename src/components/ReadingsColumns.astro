@@ -1,5 +1,6 @@
 ---
 interface Props {
+  bookImage?: string;
   readingButtonText?: string;
   crystalTitle?: string;
   crystalSubtitle?: string;
@@ -10,9 +11,10 @@ interface Props {
   experience?: string;
 }
 
-import cardsClow from '../assets/magicBook.webp';
+import defaultBookImage from '../assets/magicBook.webp';
 
 const {
+  bookImage,
   readingButtonText = "Get a Reading",
   crystalTitle = "Crystal Readings",
   crystalSubtitle = "Cartas Clow · Guía Espiritual",
@@ -22,6 +24,8 @@ const {
   crystalButtonText = "Register Now",
   experience = "Experience",
 } = Astro.props;
+
+const bookImageSrc = bookImage || defaultBookImage.src;
 ---
 
 <div class="readings-columns">
@@ -29,7 +33,7 @@ const {
   <div class="column column-reading">
     <div class="column-arch"></div>
     <div class="column-image">
-      <img src={cardsClow.src} alt="Libro mágico de las Cartas Clow — lectura espiritual" width="400" height="600" loading="lazy" decoding="async" />
+      <img src={bookImageSrc} alt="Libro mágico de las Cartas Clow — lectura espiritual" width="400" height="600" loading="lazy" decoding="async" />
     </div>
     <button type="button" class="column-btn" data-open-modal>{readingButtonText}</button>
   </div>
@@ -448,8 +452,8 @@ const {
     }
 
     .column {
-      min-width: 110px;
-      flex: 0 0 110px;
+      min-width: 100px;
+      flex: 0 0 100px;
       padding: 0.45rem 0.3rem;
       border-radius: 80px 80px 4px 4px;
     }
