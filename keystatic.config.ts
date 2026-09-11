@@ -20,9 +20,11 @@ export default config({
         }),
         readingButtonText: fields.text({
           label: "Botón Obtener Lectura",
+          validation: { isRequired: true },
         }),
         crystalButtonText: fields.text({
           label: "Botón Reserva Ahora",
+          validation: { isRequired: true },
         }),
         bookImage: fields.image({
           label: "Imagen del Libro",
@@ -31,16 +33,20 @@ export default config({
         }),
         crystalTitle: fields.text({
           label: "Título Columna Cristal",
+          validation: { isRequired: true },
         }),
         crystalSubtitle: fields.text({
           label: "Subtítulo Columna Cristal",
+          validation: { isRequired: true },
         }),
         crystalDesc: fields.text({
           label: "Descripción Columna Cristal",
           multiline: true,
+          validation: { isRequired: true },
         }),
         experience: fields.text({
           label: "Texto Experiencia",
+          validation: { isRequired: true },
         }),
         content: fields.markdoc({
           label: "Contenido",
@@ -61,9 +67,11 @@ export default config({
         }),
         readingButtonText: fields.text({
           label: "Get a Reading Button",
+          validation: { isRequired: true },
         }),
         crystalButtonText: fields.text({
           label: "Book Now Button",
+          validation: { isRequired: true },
         }),
         bookImage: fields.image({
           label: "Book Image",
@@ -72,16 +80,20 @@ export default config({
         }),
         crystalTitle: fields.text({
           label: "Crystal Column Title",
+          validation: { isRequired: true },
         }),
         crystalSubtitle: fields.text({
           label: "Crystal Column Subtitle",
+          validation: { isRequired: true },
         }),
         crystalDesc: fields.text({
           label: "Crystal Column Description",
           multiline: true,
+          validation: { isRequired: true },
         }),
         experience: fields.text({
           label: "Experience Text",
+          validation: { isRequired: true },
         }),
         content: fields.markdoc({
           label: "Content",
