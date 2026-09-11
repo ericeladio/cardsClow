@@ -23,7 +23,7 @@ const t = translations[locale];
 
 const contentCollection = locale === 'es' ? await getCollection('pageContentEs') : await getCollection('pageContentEn');
 const c = contentCollection[0]?.data;
-const site = Astro.site?.toString() ?? "https://tarotpage.vercel.app";
+const site = Astro.site?.toString() ?? "https://cards-clow-x62uue278-ericchavarriaper-8343s-projects.vercel.app";
 const canonical = new URL(`/${locale}/`, site).toString();
 
 const jsonLd = [
