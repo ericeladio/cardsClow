@@ -1,9 +1,10 @@
 import { config, fields, collection } from "@keystatic/core";
 
 export default config({
-  storage: {
-    kind: "local",
-  },
+  storage: import.meta.env.DEV === true
+    ? { kind: "local" }
+    : { kind: "cloud" },
+  cloud: { project: "cards-clow/cardsclow" },
   collections: {
     pageContentEs: collection({
       label: "Contenido Grid 1 (ES)",
