@@ -1,0 +1,87 @@
+---
+interface Props {
+  currentLocale: string;
+}
+
+const { currentLocale } = Astro.props;
+---
+
+<div class="lang-switcher">
+  <a 
+    href="/es" 
+    class:list={['lang-link', { active: currentLocale === 'es' }]}
+    data-locale="es"
+  >ES</a>
+  <span class="separator">|</span>
+  <a 
+    href="/en" 
+    class:list={['lang-link', { active: currentLocale === 'en' }]}
+    data-locale="en"
+  >EN</a>
+</div>
+
+<script is:inline>
+  function initLangSwitcher() {
+    const links = document.querySelectorAll('.lang-link');
+    
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = e.target as HTMLAnchorElement;
+        const locale = target.getAttribute('data-locale') as 'es' | 'en';
+        
+        localStorage.setItem('locale', locale);
+        
+        const currentPath = window.location.pathname;
+        const newPath = currentPath.replace(/^\/(es|en)/, '') || '/';
+        window.location.href = `/${locale}${newPath === '/' ? '' : newPath}`;
+      });
+    });
+
+    const stored = localStorage.getItem('locale');
+    const currentPath = window.location.pathname;
+    const isEn = currentPath.startsWith('/en');
+    
+    if (stored && ((stored === 'en' && !isEn) || (stored === 'es' && isEn))) {
+      const newPath = currentPath.replace(/^\/(es|en)/, '') || '/';
+      window.location.href = `/${stored}${newPath === '/' ? '' : newPath}`;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initLangSwitcher);
+</script>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .lang-link {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--color-text);
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    letter-spacing: 0.05em;
+  }
+
+  .lang-link:hover {
+    opacity: 1;
+    color: var(--color-gold);
+  }
+
+  .lang-link.active {
+    opacity: 1;
+    color: var(--color-gold);
+    font-weight: 500;
+  }
+
+  .separator {
+    color: var(--color-text);
+    opacity: 0.3;
+    font-size: 0.7rem;
+  }
+</style>

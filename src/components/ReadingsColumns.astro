@@ -1,0 +1,475 @@
+---
+interface Props {
+  readingButtonText?: string;
+  crystalTitle?: string;
+  crystalSubtitle?: string;
+  crystalDesc?: string;
+  crystalDate?: string;
+  crystalCardName?: string;
+  crystalButtonText?: string;
+  experience?: string;
+}
+
+import cardsClow from '../assets/magicBook.webp';
+
+const {
+  readingButtonText = "Get a Reading",
+  crystalTitle = "Crystal Readings",
+  crystalSubtitle = "Cartas Clow · Guía Espiritual",
+  crystalDesc = "",
+  crystalDate = "22 May",
+  crystalCardName = "The Pallazio",
+  crystalButtonText = "Register Now",
+  experience = "Experience",
+} = Astro.props;
+---
+
+<div class="readings-columns">
+  <!-- Reading Column - Arched top -->
+  <div class="column column-reading">
+    <div class="column-arch"></div>
+    <div class="column-image">
+      <img src={cardsClow.src} alt="Libro mágico de las Cartas Clow — lectura espiritual" width="400" height="600" loading="lazy" decoding="async" />
+    </div>
+    <button type="button" class="column-btn" data-open-modal>{readingButtonText}</button>
+  </div>
+
+  <!-- Crystal Column - Professional Reading -->
+  <div class="column column-crystal">
+    <div class="column-arch"></div>
+    <h3 class="column-title">{crystalTitle}</h3>
+    <p class="crystal-subtitle">{crystalSubtitle}</p>
+    <p class="crystal-desc">{crystalDesc}</p>
+    <div class="crystal-experience">
+      <span class="experience-text">{experience}</span>
+      <span class="eclipse-icon" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18.5" cy="20" r="13" fill="none" stroke="#d4a853" stroke-width="0.8" opacity="0.25"/>
+          <circle cx="18.5" cy="20" r="9" fill="#d4a853" opacity="0.95" class="eclipse-gold"/>
+          <g stroke="#d4a853" stroke-width="1" opacity="0.75" class="eclipse-gold eclipse-rays">
+            <line x1="18.5" y1="7" x2="18.5" y2="3"/>
+            <line x1="18.5" y1="33" x2="18.5" y2="37"/>
+            <line x1="5.5" y1="20" x2="1.5" y2="20"/>
+            <line x1="31.5" y1="20" x2="35.5" y2="20"/>
+            <line x1="9.3" y1="10.8" x2="6.5" y2="8"/>
+            <line x1="27.7" y1="10.8" x2="30.5" y2="8"/>
+            <line x1="9.3" y1="29.2" x2="6.5" y2="32"/>
+            <line x1="27.7" y1="29.2" x2="30.5" y2="32"/>
+          </g>
+          <circle cx="18.5" cy="20" r="9" fill="none" stroke="#d4a853" stroke-width="1.2" opacity="0.9" class="eclipse-gold"/>
+          <circle cx="23.5" cy="20" r="8.2" fill="#000" stroke="none"/>
+          <circle cx="18.5" cy="20" r="11.5" fill="#d4a853" opacity="0.14" class="eclipse-light"/>
+        </svg>
+      </span>
+    </div>
+    <button type="button" class="column-btn crystal-btn" data-open-modal>{crystalButtonText}</button>
+  </div>
+</div>
+
+<style>
+  .readings-columns {
+    display: flex;
+    gap: 1rem;
+    padding: 0.4rem 0.8rem;
+    align-items: stretch;
+    height: 100%;
+    min-height: 0;
+    justify-content: center;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .column {
+    flex: 1 1 0;
+    padding: 0.5rem 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 120px 120px 6px 6px;
+    max-width: 200px;
+    min-width: 120px;
+    min-height: 0;
+  }
+
+  .column:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .column-arch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45px;
+    background: linear-gradient(180deg, rgba(212, 168, 83, 0.15) 0%, rgba(212, 168, 83, 0.05) 50%, transparent 100%);
+    border-radius: 100px 100px 0 0;
+    pointer-events: none;
+  }
+
+  /* Reading Column */
+  .column-reading {
+    background: var(--color-surface);
+    justify-content: flex-end;
+    border: 1px solid rgba(212, 168, 83, 0.15);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .column-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    border-radius: 120px 120px 6px 6px;
+    margin: 0;
+    z-index: 0;
+  }
+
+  .column-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(212,168,83,0.12) 0%, rgba(60,30,10,0.20) 100%);
+    border-radius: 120px 120px 6px 6px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .column-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 120px 120px 6px 6px;
+    filter: sepia(0.45) saturate(1.25) hue-rotate(-6deg) brightness(0.88) contrast(1.08) opacity(0.78);
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+
+  .column-reading .column-btn {
+    position: absolute;
+    bottom: 0.6rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    transform: none;
+    z-index: 2;
+    white-space: nowrap;
+    width: 132px;
+    max-width: calc(100% - 0.8rem);
+    display: inline-flex;
+    justify-content: center;
+    padding: 0.42rem 0.5rem;
+    font-size: 0.74rem;
+    background: linear-gradient(180deg, rgba(106,58,122,0.88) 0%, rgba(58,26,74,0.92) 100%);
+    backdrop-filter: blur(4px);
+    border-color: rgba(212, 168, 83, 0.45);
+    color: var(--color-gold);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.45), 0 1px 6px rgba(212,168,83,0.18);
+  }
+
+  .column-reading:hover .column-image img {
+    filter: sepia(0.30) saturate(1.15) hue-rotate(-4deg) brightness(0.96) contrast(1.05) opacity(0.88);
+    transform: scale(1.03);
+  }
+
+  .column-reading .column-btn:hover {
+    background: linear-gradient(180deg, rgba(122,68,142,0.95) 0%, rgba(72,34,92,0.95) 100%);
+    color: var(--color-gold);
+    border-color: rgba(212, 168, 83, 0.7);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5), 0 2px 10px rgba(212,168,83,0.28);
+  }
+
+  /* Crystal Column */
+  .column-crystal {
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(106, 58, 122, 0.8) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 30%, rgba(58, 26, 74, 0.9) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 70%, rgba(106, 58, 122, 0.7) 0%, transparent 55%),
+      radial-gradient(ellipse at 30% 90%, rgba(58, 26, 74, 0.8) 0%, transparent 40%),
+      radial-gradient(ellipse at 70% 60%, rgba(106, 58, 122, 0.6) 0%, transparent 50%),
+      linear-gradient(180deg, #3a1a4a 0%, #2a1035 100%);
+    justify-content: flex-start;
+    gap: 0.15rem;
+    border: 1px solid rgba(212, 168, 83, 0.4);
+    padding: 0.85rem 0.5rem 2.6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .column-crystal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 15% 15%, rgba(150, 100, 180, 0.3) 0%, transparent 30%),
+      radial-gradient(circle at 85% 25%, rgba(80, 40, 100, 0.4) 0%, transparent 25%),
+      radial-gradient(circle at 45% 80%, rgba(120, 70, 150, 0.3) 0%, transparent 35%),
+      radial-gradient(circle at 75% 70%, rgba(60, 30, 80, 0.35) 0%, transparent 28%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .column-crystal .column-title {
+    color: var(--color-gold);
+  }
+
+  .column-crystal > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .column-title {
+    font-family: var(--font-serif);
+    font-size: 1.08rem;
+    color: var(--color-gold);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.04em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .crystal-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .crystal-desc {
+    font-family: var(--font-sans);
+    font-size: 0.74rem;
+    color: var(--color-text);
+    opacity: 0.92;
+    line-height: 1.5;
+    max-width: 92%;
+    margin: 0 auto 0.4rem;
+  }
+
+  .crystal-experience {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-top: 0.25rem;
+  }
+
+  .eclipse-icon {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 8px rgba(212,168,83,0.35));
+  }
+
+  .eclipse-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .eclipse-gold {
+    animation: goldBlink 2.4s ease-in-out infinite;
+  }
+
+  .eclipse-rays {
+    animation-delay: 0.4s;
+  }
+
+  .eclipse-light {
+    animation: lightBlink 2s ease-in-out infinite;
+    transform-origin: 18.5px 20px;
+  }
+
+  @keyframes goldBlink {
+    0%, 100% { opacity: 0.82; }
+    50% { opacity: 1; filter: brightness(1.08); }
+  }
+
+  @keyframes lightBlink {
+    0%, 100% { opacity: 0.10; transform: scale(0.92); }
+    50% { opacity: 0.26; transform: scale(1.08); }
+  }
+
+  .experience-text {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--color-text);
+    font-style: italic;
+    opacity: 0.9;
+    transform: rotate(-15deg);
+    letter-spacing: 0.04em;
+  }
+
+  .column-btn {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    background: transparent;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: 3px;
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    margin-top: 0.3rem;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  .column-btn:hover {
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+  }
+
+  .column-crystal .crystal-btn {
+    position: absolute;
+    bottom: 0.6rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    transform: none;
+    white-space: nowrap;
+    width: 132px;
+    max-width: calc(100% - 0.8rem);
+    display: inline-flex;
+    justify-content: center;
+    border-color: rgba(106, 58, 122, 0.55);
+    color: #3a1a4a;
+    border-radius: 8px;
+    padding: 0.42rem 0.5rem;
+    font-size: 0.74rem;
+    background: linear-gradient(180deg, rgba(212,168,83,0.96) 0%, rgba(176,138,62,0.98) 100%);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 1px 6px rgba(212,168,83,0.22);
+  }
+
+  .column-crystal .crystal-btn:hover {
+    background: linear-gradient(180deg, rgba(224,180,92,0.98) 0%, rgba(188,148,68,1) 100%);
+    color: #2a1035;
+    border-color: rgba(106, 58, 122, 0.75);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 10px rgba(212,168,83,0.32);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .readings-columns {
+      padding: 0.3rem 0.6rem;
+      gap: 0.25rem;
+    }
+
+    .column {
+      padding: 0.4rem 0.2rem;
+      border-radius: 100px 100px 5px 5px;
+    }
+
+    .column-reading .column-image,
+    .column-reading .column-image img {
+      border-radius: 100px 100px 0 0;
+    }
+
+    .column-arch {
+      border-radius: 100px 100px 0 0;
+      height: 40px;
+    }
+
+    .date-day {
+      font-size: 1.15rem;
+    }
+
+    .experience-text {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .readings-columns {
+      flex-direction: row;
+      gap: 0.3rem;
+      padding: 0.4rem 0.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+
+    .column {
+      min-width: 130px;
+      flex: 0 0 130px;
+      scroll-snap-align: center;
+      padding: 0.5rem 0.3rem;
+      border-radius: 90px 90px 5px 5px;
+    }
+
+    .column-reading .column-image,
+    .column-reading .column-image img {
+      border-radius: 90px 90px 0 0;
+    }
+
+    .column-arch {
+      border-radius: 90px 90px 0 0;
+      height: 35px;
+    }
+
+    .date-day {
+      font-size: 1.2rem;
+    }
+
+    .experience-text {
+      font-size: 0.92rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .readings-columns {
+      padding: 0.4rem 0.4rem;
+    }
+
+    .column {
+      min-width: 110px;
+      flex: 0 0 110px;
+      padding: 0.45rem 0.3rem;
+      border-radius: 80px 80px 4px 4px;
+    }
+
+    .column-reading .column-image,
+    .column-reading .column-image img {
+      border-radius: 80px 80px 0 0;
+    }
+
+    .column-arch {
+      border-radius: 80px 80px 0 0;
+      height: 30px;
+    }
+
+    .date-day {
+      font-size: 1.05rem;
+    }
+
+    .experience-text {
+      font-size: 0.85rem;
+    }
+  }
+</style>

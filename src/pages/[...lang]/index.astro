@@ -1,0 +1,314 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import ReadingsColumns from '../../components/ReadingsColumns.astro';
+import CardOfTheDay from '../../components/CardOfTheDay.astro';
+import DailyCardImage from '../../components/DailyCardImage.astro';
+import ModalInfo from '../../components/ModalInfo.astro';
+import { type Locale } from '../../data/clowCards';
+import { translations } from '../../i18n/translations';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'es' } },
+    { params: { lang: 'en' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const locale = lang as Locale;
+const t = translations[locale];
+const site = Astro.site?.toString() ?? "https://tarotpage.vercel.app";
+const canonical = new URL(`/${locale}/`, site).toString();
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": t.seo.title,
+    "url": canonical,
+    "inLanguage": locale,
+    "description": t.seo.description,
+    "author": { "@type": "Person", "name": "Eric Chavarria", "url": "https://ericeladio.github.io/porfolio/" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Eric Chavarria",
+    "url": "https://ericeladio.github.io/porfolio/",
+    "jobTitle": "Software Developer",
+    "sameAs": ["https://ericeladio.github.io/porfolio/"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": locale === "es" ? "Inicio" : "Home", "item": canonical }
+    ]
+  }
+];
+---
+
+<Layout
+  lang={locale}
+  title={t.seo.title}
+  description={t.seo.description}
+  keywords={t.seo.keywords}
+  canonical={canonical}
+  ogImage="/assets/cards_clow.jpg"
+  jsonLd={jsonLd}
+>
+  <Header locale={locale} />
+  
+  <main class="main-content" id="main-content">
+    <div class="bg-gradient"></div>
+    <div class="golden-curve"></div>
+    <section class="hero-area">
+      <HeroSection title={t.hero.title} />
+    </section>
+    <div class="main-grid">
+      <div class="grid-col-1">
+        <ReadingsColumns 
+          readingButtonText={t.readings.getReading}
+          crystalTitle={t.readings.crystalReadings}
+          crystalSubtitle={t.readings.crystalSubtitle}
+          crystalDesc={t.readings.crystalDesc}
+          crystalButtonText={t.readings.registerNow}
+          experience={t.readings.experience}
+        />
+      </div>
+      <div class="grid-col-2">
+        <div class="cotd-wrapper">
+          <CardOfTheDay locale={locale} />
+        </div>
+        <div class="moon-wrapper">
+          <DailyCardImage locale={locale} />
+        </div>
+      </div>
+    </div>
+    <div class="bottom-stars" aria-hidden="true">
+      <svg class="star-bottom-1" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L13.5 9L20 8L14.5 12L20 16L13.5 15L12 22L10.5 15L4 16L9.5 12L4 8L10.5 9L12 2Z" fill="var(--color-gold)"/>
+      </svg>
+      <svg class="star-bottom-2" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L13.5 9L20 8L14.5 12L20 16L13.5 15L12 22L10.5 15L4 16L9.5 12L4 8L10.5 9L12 2Z" fill="var(--color-gold)"/>
+      </svg>
+      <svg class="star-bottom-3" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L13.5 9L20 8L14.5 12L20 16L13.5 15L12 22L10.5 15L4 16L9.5 12L4 8L10.5 9L12 2Z" fill="var(--color-gold)"/>
+      </svg>
+    </div>
+  </main>
+  <ModalInfo locale={locale} />
+</Layout>
+
+<style>
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 45px 0 1.5rem 0;
+    box-sizing: border-box;
+    position: relative;
+    overflow: visible;
+  }
+
+  .bg-gradient {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 60%;
+    background: radial-gradient(ellipse at top right, rgba(180, 130, 50, 0.15) 0%, rgba(140, 100, 30, 0.08) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .golden-curve {
+    position: fixed;
+    bottom: -100px;
+    left: -100px;
+    width: 800px;
+    height: 500px;
+    border: 2px solid var(--color-gold);
+    border-radius: 50%;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+    transform: rotate(-15deg);
+  }
+
+  .hero-area {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-height: 0;
+    overflow: visible;
+    margin-bottom: 1rem;
+  }
+
+  .grid-col-1 {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(212, 168, 83, 0.15);
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .grid-col-2 {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 0;
+  }
+
+  .cotd-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(212, 168, 83, 0.1);
+  }
+
+  .moon-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 0 50px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .moon-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  .moon-wrapper::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    animation: shimmer 8s ease-in-out infinite;
+  }
+
+  .bottom-stars {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .bottom-stars svg {
+    position: absolute;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  .star-bottom-1 {
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    left: 0;
+    animation-delay: 0s;
+  }
+
+  .star-bottom-2 {
+    width: 14px;
+    height: 14px;
+    bottom: 30px;
+    left: 30px;
+    animation-delay: 0.5s;
+  }
+
+  .star-bottom-3 {
+    width: 10px;
+    height: 10px;
+    bottom: 10px;
+    left: 50px;
+    animation-delay: 1s;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.5; transform: rotate(0deg); }
+    50% { opacity: 1; transform: rotate(3deg); }
+  }
+
+  @media (max-width: 1200px) {
+    .main-grid {
+      padding: 0 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main-content {
+      height: auto;
+      min-height: 100vh;
+      padding-top: 45px;
+    }
+
+    .main-grid {
+      grid-template-columns: 1fr;
+      padding: 0 1rem;
+      gap: 1rem;
+    }
+
+    .grid-col-1 {
+      border-right: none;
+      border-bottom: 1px solid rgba(212, 168, 83, 0.15);
+      padding-bottom: 1rem;
+    }
+
+    .grid-col-2 {
+      flex-direction: column;
+    }
+
+    .cotd-wrapper {
+      border-right: none;
+      border-bottom: 1px solid rgba(212, 168, 83, 0.1);
+      padding-bottom: 1rem;
+    }
+
+    .moon-wrapper {
+      border-radius: 0;
+      padding: 1rem;
+    }
+
+    .moon-wrapper::after {
+      display: none;
+    }
+
+    .bottom-stars {
+      display: none;
+    }
+
+    .golden-curve {
+      display: none;
+    }
+  }
+</style>

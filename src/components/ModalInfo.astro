@@ -1,0 +1,151 @@
+---
+import { translations, type TranslationKey } from '../i18n/translations';
+import type { Locale } from '../data/clowCards';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props as Props;
+const t = (translations[locale] ?? translations.es) as TranslationKey;
+const portfolioUrl = "https://ericeladio.github.io/porfolio/";
+---
+
+<div id="portfolio-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <button class="modal-close" aria-label={t.modal.close} data-close>&times;</button>
+    <h2 id="modal-title" class="modal-title">{t.modal.title}</h2>
+    <p class="modal-desc">{t.modal.about}</p>
+    <a href={portfolioUrl} target="_blank" rel="noopener noreferrer" class="modal-btn">
+      {t.modal.visitPortfolio}
+      <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('portfolio-modal');
+  const closeEls = overlay?.querySelectorAll('[data-close]');
+  function openModal() {
+    if (!overlay) return;
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    if (!overlay) return;
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  closeEls?.forEach(el => el.addEventListener('click', closeModal));
+  overlay?.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay?.classList.contains('is-open')) closeModal();
+  });
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.closest('[data-open-modal]')) openModal();
+  });
+  (window as any).openPortfolioModal = openModal;
+  document.addEventListener('open-portfolio-modal', openModal);
+</script>
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
+  }
+  .modal-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem 1.75rem 1.75rem;
+    background: radial-gradient(ellipse at top center, rgba(106, 58, 122, 0.55) 0%, rgba(58, 26, 74, 0.95) 45%, #1a1a1a 100%),
+      linear-gradient(180deg, #3a1a4a 0%, #2a1035 100%);
+    border: 1px solid rgba(212, 168, 83, 0.28);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 24px rgba(212, 168, 83, 0.12);
+    text-align: center;
+    transform: translateY(10px) scale(0.98);
+    transition: transform 0.28s ease;
+  }
+  .modal-overlay.is-open .modal-box {
+    transform: translateY(0) scale(1);
+  }
+  .modal-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--color-gold);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .modal-close:hover {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  .modal-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+  .modal-desc {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    opacity: 0.92;
+    margin-bottom: 1.35rem;
+  }
+  .modal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.15rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #3a1a4a;
+    background: linear-gradient(180deg, rgba(212, 168, 83, 0.98) 0%, rgba(176, 138, 62, 0.98) 100%);
+    border: 1px solid rgba(106, 58, 122, 0.35);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .modal-btn:hover {
+    background: linear-gradient(180deg, rgba(224, 180, 92, 0.98) 0%, rgba(188, 148, 68, 1) 100%);
+    transform: translateY(-1px);
+  }
+  @media (max-width: 480px) {
+    .modal-box { padding: 1.6rem 1.25rem 1.4rem; }
+  }
+</style>

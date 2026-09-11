@@ -1,0 +1,266 @@
+---
+interface Props {
+  title?: string;
+}
+
+const {
+  title = "Tarot Readings",
+} = Astro.props;
+---
+
+<section class="hero-section">
+  <div class="hero-decorations">
+    <!-- Sun and Moon celestial symbol -->
+    <div class="celestial-symbol">
+      <!-- Sun -->
+      <svg class="sun" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="10" fill="#d4a853" opacity="0.9"/>
+        <g stroke="#d4a853" stroke-width="1.5" opacity="0.8">
+          <line x1="30" y1="5" x2="30" y2="12"/>
+          <line x1="30" y1="48" x2="30" y2="55"/>
+          <line x1="5" y1="30" x2="12" y2="30"/>
+          <line x1="48" y1="30" x2="55" y2="30"/>
+          <line x1="12.3" y1="12.3" x2="17.3" y2="17.3"/>
+          <line x1="42.7" y1="42.7" x2="47.7" y2="47.7"/>
+          <line x1="47.7" y1="12.3" x2="42.7" y2="17.3"/>
+          <line x1="17.3" y1="42.7" x2="12.3" y2="47.7"/>
+        </g>
+      </svg>
+      <!-- Moon -->
+      <svg class="moon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M25 5C18 5 12 11 12 18C12 25 18 31 25 31C20 28 17 23 17 18C17 13 20 8 25 5Z" fill="#d4a853" opacity="0.85"/>
+      </svg>
+    </div>
+
+    <!-- Small twinkling stars -->
+    <svg class="star-small star-1" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L13.5 9L20 8L14.5 12L20 16L13.5 15L12 22L10.5 15L4 16L9.5 12L4 8L10.5 9L12 2Z" fill="var(--color-gold)"/>
+    </svg>
+    <svg class="star-small star-2" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L13.5 9L20 8L14.5 12L20 16L13.5 15L12 22L10.5 15L4 16L9.5 12L4 8L10.5 9L12 2Z" fill="var(--color-gold)"/>
+    </svg>
+    <svg class="star-small star-3" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L13.5 9L20 8L14.5 12L20 16L13.5 15L12 22L10.5 15L4 16L9.5 12L4 8L10.5 9L12 2Z" fill="var(--color-gold)"/>
+    </svg>
+
+    <!-- Curved decorative line -->
+    <div class="curved-line"></div>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-title">{title}</h1>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    padding: 1.75rem 3rem 0.15rem;
+    min-height: 5vh;
+    max-height: 5vh;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+  }
+
+  .hero-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  .celestial-symbol {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 0;
+    left: 1rem;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  .sun {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    top: 5px;
+    left: 5px;
+  }
+
+  .moon {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .star-small {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  .star-1 {
+    top: 1rem;
+    left: 80px;
+    animation-delay: 0s;
+  }
+
+  .star-2 {
+    top: 2.5rem;
+    left: 50px;
+    animation-delay: 0.8s;
+  }
+
+  .star-3 {
+    bottom: 0.5rem;
+    left: 25px;
+    animation-delay: 1.6s;
+  }
+
+  .curved-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 120px;
+    height: 90px;
+    border: 2px solid var(--color-gold);
+    border-radius: 0 0 100px 0;
+    border-top: none;
+    border-left: none;
+    opacity: 0.15;
+    transform: translateY(-50%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    margin-left: 70px;
+  }
+
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400;
+    color: var(--color-gold);
+    letter-spacing: 0.02em;
+    font-style: italic;
+    animation: fadeInUp 1s ease-out;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.75; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 1024px) {
+    .hero-section {
+      padding: 1.5rem 2rem 0.15rem;
+    }
+
+    .hero-content {
+      margin-left: 40px;
+    }
+
+    .celestial-symbol {
+      width: 50px;
+      height: 50px;
+    }
+
+    .sun {
+      width: 36px;
+      height: 36px;
+    }
+
+    .moon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .curved-line {
+      width: 80px;
+      height: 60px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 1.5rem 1.5rem 0.15rem;
+      min-height: 8vh;
+    }
+
+    .hero-content {
+      margin-left: 30px;
+    }
+
+    .celestial-symbol {
+      width: 40px;
+      height: 40px;
+    }
+
+    .sun {
+      width: 28px;
+      height: 28px;
+    }
+
+    .moon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .star-small {
+      width: 5px;
+      height: 5px;
+    }
+
+    .curved-line {
+      width: 60px;
+      height: 45px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-section {
+      padding: 1.25rem 1rem 0.15rem;
+    }
+
+    .hero-content {
+      margin-left: 18px;
+    }
+
+    .celestial-symbol {
+      width: 30px;
+      height: 30px;
+    }
+
+    .sun {
+      width: 22px;
+      height: 22px;
+    }
+
+    .moon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .curved-line {
+      width: 45px;
+      height: 30px;
+      opacity: 0.12;
+    }
+  }
+</style>
